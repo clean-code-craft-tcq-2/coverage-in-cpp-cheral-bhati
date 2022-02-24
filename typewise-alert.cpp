@@ -1,5 +1,6 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include <map>
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
@@ -16,7 +17,7 @@ std::map<CoolingType, pair<int, int>> classifyCoolingTypeRange =
         {CoolingType::PASSIVE_COOLING, make_pair(0, 35)},
         {CoolingType::HI_ACTIVE_COOLING, make_pair(0, 45)},
         {CoolingType::MED_ACTIVE_COOLING, make_pair(0, 40)}
-    };
+    }
 
 BreachType classifyTemperatureBreach(
     CoolingType coolingType, double temperatureInC) {
