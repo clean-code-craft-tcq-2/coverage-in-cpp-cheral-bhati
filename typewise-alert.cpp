@@ -45,7 +45,7 @@ bool sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
   if(breachType != NORMAL)
   {
-      const char* BreachMessage = BreachTypeMsg[breachType];
+      std::string BreachMessage = BreachTypeMsg[breachType];
       printf("To: %s\n", recepient);
       printf("%s\n", BreachMessage  );
       return true;
