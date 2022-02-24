@@ -37,5 +37,8 @@ TEST_CASE("verify if the message is sent on Email")
   REQUIRE(sendToEmail(NORMAL) == false);
 }
   
-  
+TEST_CASE("")
+{
+ REQUIRE(checkAndAlert(TO_CONTROLLER,PASSIVE_COOLING,20) == true);
+}
 
