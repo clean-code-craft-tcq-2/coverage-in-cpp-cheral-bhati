@@ -42,10 +42,12 @@ TEST_CASE("verify if the message is sent on Email")
 TEST_CASE("check breach type and alert the user ")
 {
  batteryChar.coolingType = CoolingType::PASSIVE_COOLING;
- REQUIRE(checkAndAlert(TO_CONTROLLER,PASSIVE_COOLING,20) == true);
+ REQUIRE(checkAndAlert(TO_CONTROLLER,batteryChar,20) == true);
+  
  batteryChar.coolingType = CoolingType::HI_ACTIVE_COOLING;
- REQUIRE(checkAndAlert(TO_CONTROLLER,HI_ACTIVE_COOLING,46) == true); 
+ REQUIRE(checkAndAlert(TO_CONTROLLER,batteryChar,46) == true);
+  
  batteryChar.coolingType = CoolingType::MED_ACTIVE_COOLING;
- REQUIRE(checkAndAlert(TO_CONTROLLER,MED_ACTIVE_COOLING,-2) == true);  
+ REQUIRE(checkAndAlert(TO_CONTROLLER,batteryChar,-2) == true);  
 }
 
