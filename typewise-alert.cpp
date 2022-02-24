@@ -47,13 +47,15 @@ bool sendToEmail(BreachType breachType) {
   {
       const char* BreachMessage = BreachTypeMsg[breachType];
       printf("To: %s\n", recepient);
-      printf("%s\n", breachMessage);
+      printf("%s\n", BreachMessage  );
       return true;
   }
   return false;
   }
 
-switch(alertTarget) {
+void sendAlert(AlertTarget alertTarget, BreachType breachType)
+{
+  switch(alertTarget) {
     case TO_CONTROLLER:
       sendToController(breachType);
       break;
@@ -61,11 +63,11 @@ switch(alertTarget) {
       sendToEmail(breachType);
       break;
   }
+}
 
-void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
-
-  BreachType breachType = classifyTemperatureBreach(
-    batteryChar.coolingType, temperatureInC
-  );
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC)
+{
+  BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
+  sendAlert(alertTarget, breachType);
   
 }
