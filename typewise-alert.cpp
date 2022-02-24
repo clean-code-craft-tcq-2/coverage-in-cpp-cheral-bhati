@@ -27,7 +27,7 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
   return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
-std::map<BreachType, std::string> BreachTypeMsg =
+std::map<BreachType, const char*> BreachTypeMsg =
     {
         {BreachType::TOO_LOW, "Hi, the temperature is too low\n"},
         {BreachType::TOO_HIGH, "Hi, the temperature is too high\n"},
@@ -45,7 +45,7 @@ bool sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
   if(breachType != NORMAL)
   {
-      std::string BreachMessage = BreachTypeMsg[breachType];
+      const char* BreachMessage = BreachTypeMsg[breachType];
       printf("To: %s\n", recepient);
       printf("%s\n", BreachMessage  );
       return true;
