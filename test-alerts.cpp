@@ -3,6 +3,8 @@
 #include "test/catch.hpp"
 #include "typewise-alert.h"
 
+BatteryCharacter batteryChar;
+
 TEST_CASE("infers the breach according to limits")
 {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
@@ -39,7 +41,7 @@ TEST_CASE("verify if the message is sent on Email")
   
 TEST_CASE("check breach type and alert the user ")
 {
- BattCharacter.coolingType = CoolingType::PASSIVE_COOLING;
+ batteryChar.coolingType = CoolingType::PASSIVE_COOLING;
  REQUIRE(checkAndAlert(TO_CONTROLLER,PASSIVE_COOLING,20) == true);
  batteryChar.coolingType = CoolingType::HI_ACTIVE_COOLING;
  REQUIRE(checkAndAlert(TO_CONTROLLER,HI_ACTIVE_COOLING,46) == true); 
