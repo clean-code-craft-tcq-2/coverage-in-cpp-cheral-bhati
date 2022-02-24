@@ -19,8 +19,7 @@ std::map<CoolingType, std::pair<int, int>> classifyCoolingTypeRange =
         {CoolingType::MED_ACTIVE_COOLING, std::make_pair(0, 40)}
     };
 
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
+BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
   int lowerLimit = 0;
   int upperLimit = 0;
   lowerLimit = classifyCoolingTypeRange.find(coolingType)->second.first;
@@ -28,14 +27,33 @@ BreachType classifyTemperatureBreach(
   return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
-void checkAndAlert(
-    AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
+std::map<BreachType, std::string> BreachTypeMsg =
+    {
+        {BreachType::TOO_LOW, "Hi, the temperature is too low\n"},
+        {BreachType::TOO_HIGH, "Hi, the temperature is too high\n"},
+        {BreachType::NORMAL, "Hi, the temperature is normal\n"}
+    };
 
-  BreachType breachType = classifyTemperatureBreach(
-    batteryChar.coolingType, temperatureInC
-  );
 
-  switch(alertTarget) {
+bool sendToController(BreachType breachType) {
+  const unsigned short header = 0xfeed;
+  printf("%x : %x\n", header, breachType);
+  return true;
+}
+
+bool sendToEmail(BreachType breachType) {
+  const char* recepient = "a.b@c.com";
+  if(breachType != NORMAL)
+  {
+      const char* BreachMessage = BreachTypeMsg[breachType];
+      printf("To: %s\n", recepient);
+      printf("%s\n", breachMessage);
+      return true;
+  }
+  return false;
+  }
+
+switch(alertTarget) {
     case TO_CONTROLLER:
       sendToController(breachType);
       break;
@@ -43,25 +61,11 @@ void checkAndAlert(
       sendToEmail(breachType);
       break;
   }
-}
 
-void sendToController(BreachType breachType) {
-  const unsigned short header = 0xfeed;
-  printf("%x : %x\n", header, breachType);
-}
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
-void sendToEmail(BreachType breachType) {
-  const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
-  }
+  BreachType breachType = classifyTemperatureBreach(
+    batteryChar.coolingType, temperatureInC
+  );
+  
 }
