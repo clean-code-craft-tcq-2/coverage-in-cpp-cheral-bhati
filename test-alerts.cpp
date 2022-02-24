@@ -22,8 +22,20 @@ TEST_CASE("classify the temperature breach according to limits")
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING,42) == TOO_HIGH);
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING,-6) == TOO_LOW);
 }
-  
-  
+ 
+TEST_CASE("verify if the message is sent to Controller")
+{
+  REQUIRE(sendToController(TOO_LOW) == true);
+  REQUIRE(sendToController(TOO_HIGH) == true);        
+  REQUIRE(sendToController(NORMAL) == true);
+}
+
+TEST_CASE("verify if the message is sent on Email")
+{
+  REQUIRE(sendToEmail(TOO_LOW) == true);
+  REQUIRE(sendToEmail(TOO_HIGH) == true);        
+  REQUIRE(sendToEmail(NORMAL) == false);
+}
   
   
 
